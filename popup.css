@@ -1,0 +1,161 @@
+* {
+	box-sizing: border-box;
+}
+html {
+	font-family: sans-serif;
+	height: 100%;
+}
+body {
+	height: 100%;
+	display: grid;
+	place-items: center;
+}
+
+.states {
+	/* COLORS */
+	--back-color: #777777;
+	--text-color: #ffffff;
+	--button-color: #63b3eb;
+	/* rgb values for shadows */
+	--shadow-color: 119, 119, 119;
+
+	--btnFontSize: 1.2rem;
+	--grid-layout-gap: 2rem;
+	/* max number of columns in grid container */
+	--grid-column-count: 4;
+	/* coefficient for width of button, adjust for your font-family and wanted button width */
+	--button-width: 0.9;
+	/* var corrected with javascript and depends of max name length */
+	--name-length: 10;
+	/**
+	* Calculated values.
+	*/
+	--grid-item--min-width: calc(
+		var(--name-length) * var(--btnFontSize) * var(--button-width)
+	);
+	--gap-count: calc(var(--grid-column-count) - 1);
+	--total-gap-width: calc(var(--gap-count) * var(--grid-layout-gap));
+	--grid-item--max-width: calc(
+		(100% - var(--total-gap-width)) / var(--grid-column-count)
+	);
+}
+.states__container {
+	display: grid;
+	grid-template-columns: repeat(
+		auto-fill,
+		minmax(max(var(--grid-item--min-width), var(--grid-item--max-width)), 1fr)
+	);
+	grid-gap: var(--grid-layout-gap);
+	width: 80vw;
+	padding: clamp(1rem, 2vw, 3rem);
+	box-shadow: 0 0 12px rgba(var(--shadow-color), 0.4);
+}
+.states__btn {
+	position: relative;
+	font-size: var(--btnFontSize);
+	font-weight: 700;
+	color: var(--text-color);
+	min-width: max-content;
+	background-color: var(--button-color);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 0.8em 0;
+	border-radius: 9px;
+	border: none;
+	cursor: pointer;
+	box-shadow: 0 2px 10px 1px rgba(var(--shadow-color), 0.5);
+	transition: all 0.3s;
+}
+.states__btn:hover {
+	box-shadow: 0 6px 12px 1px rgba(var(--shadow-color), 0.6);
+	scale: 1.03;
+}
+.states__btn:active {
+	box-shadow: 0 2px 6px rgba(var(--shadow-color), 0.5);
+	scale: 1;
+	transform: translateY(3px);
+}
+.states__btn::before {
+	content: '';
+	background-color: var(--text-color);
+	width: var(--btnFontSize);
+	height: var(--btnFontSize);
+	margin-right: 0.4rem;
+	-webkit-mask-image: url("data:image/svg+xml,%3Csvg height='800' width='800' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 17.837 17.837'%3E%3Cpath d='M16.145 2.571a.7.7 0 00-.99 0L6.92 10.804l-4.241-4.27a.698.698 0 00-.989 0L.204 8.019a.703.703 0 000 .99l6.217 6.258a.704.704 0 00.99 0L17.63 5.047a.7.7 0 000-.994l-1.485-1.482z' fill='%23ffffff'/%3E%3C/svg%3E");
+	mask-image: url("data:image/svg+xml,%3Csvg height='800' width='800' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 17.837 17.837'%3E%3Cpath d='M16.145 2.571a.7.7 0 00-.99 0L6.92 10.804l-4.241-4.27a.698.698 0 00-.989 0L.204 8.019a.703.703 0 000 .99l6.217 6.258a.704.704 0 00.99 0L17.63 5.047a.7.7 0 000-.994l-1.485-1.482z' fill='%23ffffff'/%3E%3C/svg%3E");
+	-webkit-mask-position: center;
+	-webkit-mask-repeat: no-repeat;
+	-webkit-mask-size: var(--btnFontSize);
+	mask-position: center;
+	mask-repeat: no-repeat;
+	mask-size: var(--btnFontSize);
+}
+
+.states__btn span {
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	font-size: 0.6em;
+	color: #ffffff;
+	font-weight: 200;
+	padding-bottom: 0.1eem;
+}
+.states__pop-up {
+	position: fixed;
+	inset: 0;
+	padding: 10vmin;
+	padding-top: 6rem;
+	scale: 0;
+	transform-origin: center;
+	transition: scale 0.6s ease-out;
+}
+.states__pop-up[data-active] {
+	scale: 1;
+	transform-origin: center;
+}
+.states__pop-up img {
+	width: 100%;
+	height: 100%;
+
+	object-fit: contain;
+	object-position: center;
+}
+.states__overlay {
+	display: block;
+	position: fixed;
+	inset: 0;
+	z-index: -1;
+	background-color: var(--back-color);
+	opacity: 0.3;
+	backdrop-filter: blur(8px);
+}
+.states__close {
+	position: absolute;
+	top: 2rem;
+	left: 50%;
+	transform: translateX(-50%);
+	border-radius: 100px;
+	width: 3rem;
+	height: 3rem;
+
+	background-color: var(--back-color);
+	background-image: url('data:image/svg+xml;utf8,<svg width="800" height="800" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="white"><path d="M16 16l-4-4m0 0L8 8m4 4l4-4m-4 4l-4 4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>');
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: 3rem;
+	border: none;
+	cursor: pointer;
+}
+.states__close::after {
+	position: absolute;
+	width: 3rem;
+	height: 3rem;
+}
+.states__btn:focus-visible,
+.states__close:focus-visible {
+	outline-color: #63b3eb;
+	outline-width: 2px;
+	outline-offset: 4px;
+}

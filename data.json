@@ -1,0 +1,11 @@
+{
+	"states": [
+		{ "name": "Alabama", "img": "./leon.jpeg" },
+		{ "name": "Texas" },
+		{ "name": "California", "img": "./Pop-up.png", "alt": "License" },
+		{ "name": "Illinois", "img": "./annie.jpeg", "alt": "License" },
+		{ "img": "./Pop-up.png", "alt": "License" },
+		{ "name": "Indiana", "img": "./annie.jpeg", "alt": "License" },
+		{ "name": "Alabama", "img": "./markus.jpeg" }
+	]
+}
